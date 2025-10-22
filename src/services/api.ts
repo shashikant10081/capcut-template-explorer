@@ -1,7 +1,7 @@
 import { CacheService } from './cache';
 
-const SEARCH_API_URL = 'https://ccapi-shaikant-cros.onrender.com/';
-const COLLECTION_API_BASE_URL = 'https://kaptemplatelist.onrender.com/get_collection_templates?id=';
+const SEARCH_API_URL = 'https://cc-search.onrender.com/';
+const COLLECTION_API_BASE_URL = 'https://cc-list.onrender.com/get_collection_templates?id=';
 
 export interface Author {
   uid: number;
