@@ -1,7 +1,18 @@
 import { CacheService } from './cache';
 
-const SEARCH_API_URL = 'https://ccapi-shaikant-cros.onrender.com/';
-const COLLECTION_API_BASE_URL = 'https://kaptemplatelist.onrender.com/get_collection_templates?id=';
+const SEARCH_API_URL = 'https://cc-search.onrender.com/?search=';
+const COLLECTION_API_BASE_URL = 'https://cc-list.onrender.com/get_collection_templates?id=';
+
+const API_HEADERS = {
+  'accept': '*/*',
+  'accept-language': 'en-US,en;q=0.9',
+  'cache-control': 'no-cache',
+  'origin': 'https://www.capcutlover.pro',
+  'referer': 'https://www.capcutlover.pro/',
+  'sec-fetch-dest': 'empty',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-site': 'cross-site',
+};
 
 export interface Author {
   uid: number;
@@ -60,7 +71,9 @@ export class ApiService {
     }
 
     const url = `${COLLECTION_API_BASE_URL}${collectionId}&count=${count}`;
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: API_HEADERS,
+    });
     
     if (!response.ok) {
       throw new Error('Failed to fetch collection templates');
@@ -81,16 +94,9 @@ export class ApiService {
       return cached;
     }
 
-    const response = await fetch(SEARCH_API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query,
-        count: 100,
-        cursor: 0,
-      }),
+    const url = `${SEARCH_API_URL}${encodeURIComponent(query)}`;
+    const response = await fetch(url, {
+      headers: API_HEADERS,
     });
 
     if (!response.ok) {
